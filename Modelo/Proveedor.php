@@ -4,10 +4,10 @@
         private string $pwd;
         private string $nombre;
         private string $apellidos;
-        private int $telefono;
+        private string $telefono;
         private array $misProductos;
 
-        public function __construct(string $cod_prov, string $pwd, string $nombre, string $apellidos, int $telefono) {
+        public function __construct(string $cod_prov, string $pwd, string $nombre, string $apellidos, string $telefono) {
                 $this->cod_prov = $cod_prov;
                 $this->pwd = $pwd;
                 $this->nombre = $nombre;

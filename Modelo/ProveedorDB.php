@@ -101,8 +101,8 @@ class ProveedorDB {
     // Método para obtener un proveedor por su código usando un método estático alternativo
     public static function getProveedor(string $cod_prov): Proveedor {
         // Incluye el archivo de conexión
-        include_once '../Conexion/obtenerConexion.php';
-        $conexion = ObtenerConexion::obtenerConexion();
+        include_once '../Conexion/conexion.php';
+        $conexion = Conexion::obtenerConexion();
 
         // Prepara la consulta SQL
         $sql = "SELECT * FROM proveedor WHERE cod_prov = :cod_prov";
@@ -134,5 +134,41 @@ class ProveedorDB {
 
         return $proveedor;
     }
+
+    public static function Registro($cod_prov, $pwd, $nombre, $apellidos, $telefono) {
+    
+        // Establecemos conexión con la BBDD
+        include_once '../Conexion/conexion.php';
+        $conexion = Conexion::obtenerConexion();
+    
+        // Insertar nuevo usuario si no existe
+        $sql = "INSERT INTO proveedor(cod_prov, pwd, nombre, apellidos, telefono) VALUES(:cod_prov, :pwd, :nombre, :apellidos, :telefono)";
+        $sentencia = $conexion->prepare($sql);
+        $result = $sentencia->execute([
+            "cod_prov" => $cod_prov,
+            "pwd" => password_hash($pwd, PASSWORD_DEFAULT),
+            "nombre" => $nombre,
+            "apellidos" => $apellidos,
+            "telefono" => $telefono
+        ]);
+    
+        return $result; 
+    }
+
+    public static function InicioSesion($usuario){
+        // Establecemos conexión con la BBDD
+        include_once '../Conexion/conexion.php';
+        $conexion = Conexion::obtenerConexion();
+    
+        $sql = "SELECT * FROM proveedor WHERE cod_prov = ?";
+        $sentencia = $conexion->prepare($sql);
+        $sentencia->execute([$usuario]);
+    
+        $usuarioBD = $sentencia->fetch(); 
+        
+        return $usuarioBD; 
+    }
+    
+    
 }
 ?>

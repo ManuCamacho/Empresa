@@ -67,6 +67,12 @@
 
                 return $this;
         }
+
+        public function getMiProveedor()
+        {
+            return $this->miProveedor;
+        }
+    
  
 
     }
